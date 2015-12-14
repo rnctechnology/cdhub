@@ -1,0 +1,30 @@
+#!/bin/bash
+
+BPSTACK=hdp
+if [ $# -gt 0 ]; then
+  var1=$1
+  if [ "X${var1,,}" != "X" ]; then
+   BPSTACK="${var1,,}"
+  fi
+fi
+
+echo "install $BPSTACK ......"
+
+#====
+cd /etc/yum.repos.d
+sudo rm -f ambari.repo
+if [ "$BPSTACK" = "hdp" ]; then
+  sudo wget -nv http://public-repo-1.hortonworks.com/ambari/centos6/2.x/updates/2.1.2/ambari.repo
+else
+  #generate ambari.repo
+fi
+cd ~
+
+sudo yum clean all
+sudo yum install -y nc
+sudo yum install -y ambari-server
+sudo ambari-server setup -s
+
+
+echo "client.api.port=8088" >> /etc/ambari-server/conf/ambari.properties
+sudo ambari-server start
