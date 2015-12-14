@@ -1,0 +1,48 @@
+#!/bin/bash
+
+MASTER=`hostname -f`
+PORT=8081
+STACKNAME="HDP"
+STACKV="2.3"
+CLSRNAME="RNCTechCluster"
+
+#check 
+curl -H "X-Requested-By: ambari" -X GET -u admin:admin http://$MASTER:$PORT/api/v1/stacks/HDP/versons/2.3  | grep '"HDFS"'
+
+for host in `cut -d':' -f2 ../hosts.txt`; do
+  curl -H "X-Requested-By: ambari" -X GET -u admin:admin http://$MASTER:$PORT/api/v1/hosts | grep $host
+done
+
+#register blueprint
+curl -H "X-Requested-By: ambari" -X POST -u admin:admin http://$MASTER:$PORT/api/v1/blueprints/rnctechBP -d @rnctech_blueprint.json
+
+#curl -H "X-Requested-By: ambari" -X GET -u admin:admin http://$MASTER:$PORT/api/v1/blueprints/rnctechBP
+
+#create cluster
+curl -H 'X-Requested-By: ambari' -X POST -u admin:admin http://$MASTER:$PORT/api/v1/clusters/$CLSRNAME -d @rnctech_hosts.json
+
+#show result
+
+counter=0
+status="IN_PROGRESS"
+#maximum wait 110 minutes
+while [ $counter -le 110 ] && [ "$status" = "IN_PROGRESS" ]
+do
+    status="$(curl -s -H 'X-Requested-By: ambari' -X GET -u admin:admin http://$MASTER:$PORT/api/v1/clusters/$CLSRNAME/requests/1 | grep request_status | cut -d'"' -f4)"
+    if [ "$status" = "" ]; then
+       status="COMPLETED"
+    fi
+    if [ "$status" = "PENDING" ]; then
+       status="IN_PROGRESS"
+    fi
+    echo "$counter as $status"
+    sleep 60
+    let counter=$counter+1
+done
+
+if [ "$status" = "FAILED" ] || [ "$status" = "ABORTED" ]; then
+    echo "create Cluster $4 failed as status $status"
+    exit 1
+else
+   echo "$counter as $status"
+fi
