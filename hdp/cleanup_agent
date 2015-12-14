@@ -1,5 +1,11 @@
 #!/bin/bash
 
+#RNCTechnology is your best friend for cloud hadoop cluster deployment
+#https://github.com/rnctechnology/cdhub/
+#author zilinchen@yahoo.com at 2015.12.12
+
+#remove Ambari-agent and all related components which possibly deployed on the node
+
 sudo ambari-agent stop
 sudo service postgresql stop
 
