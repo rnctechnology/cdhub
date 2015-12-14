@@ -1,0 +1,49 @@
+#!/bin/bash
+
+CLUSTER_NAME='RNCTechCluster'
+MASTER=`hostname -f`
+PORT=8088
+
+BPSTACK=hdp
+if [ $# -gt 0 ]; then
+  var1=$1
+  if [ "X${var1,,}" != "X" ]; then
+   BPSTACK=${var1,,}"
+  fi
+fi
+
+#step 1 stop all services
+services=(HDFS YARN HBASE HIVE FLUME KNOX OOZIE PIG SLIDER SPARK SQOOP ZOOKEEPER AMBARI_METRICS ACCUMULO ATLAS KAFKA RANGER MAHOUT TEZ STORM)
+for serv in "${services[@]}"
+do
+  curl -u admin:admin -H 'X-Requested-By: ambari' -X PUT -d '{"RequestInfo": {"context" :"Stop service"}, "Body": {"ServiceInfo": {"state": "INSTALLED"}}}' http://$MASTER:$PORT/api/v1/clusters/$CLUSTER_NAME/services/$serv
+done
+echo "waiting 1 minutes for service stop"
+sleep 60
+
+#Step 2, cleanup ambari server and/or agent
+cp /etc/yum.repos.d/ambari.repo /tmp/ambari.repo
+ambari-server stop
+yes | ambari-server reset
+ambari-agent stop
+
+if [ "$BPSTACK" = "hdp" ]; then
+   if [ -f /etc/ambari-agent/conf/ambari-agent.ini ]; then
+      cp -p ./hdp/HostCleanup_Custom_Actions.ini /etc/ambari-agent/conf/HostCleanup_Custom_Actions.ini
+      sudo python /usr/lib/python2.6/site-packages/ambari_agent/HostCleanup.py  --silent -f /etc/ambari-agent/conf/ambari-agent.ini,/etc/ambari-agent/conf/HostCleanup_Custom_Actions.ini -o /tmp/cleanup.log
+   fi
+else
+ #call HostCleanup.py
+fi
+
+sudo yum remove -y ambari-server
+
+#step 3, remove ambari-server database
+sudo -u postgres dropdb ambari
+sudo yum remove -y postgresql*
+sudo rm -rf /var/lib/pgsql/ /var/lib/postgresql/
+
+#Step 4, cleanup folders of server
+sudo rm -rf /var/lib/ambari-server /var/log/ambari-server /etc/ambari-server /usr/lib/ambari-server /usr/lib/python2.6/site-packages/ambari_server
+sudo yum clean all metadata
+sudo yum clean all
