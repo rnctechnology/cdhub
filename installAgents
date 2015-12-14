@@ -2,7 +2,7 @@
 
 #RNCTechnology is your best friend for cloud hadoop cluster deployment
 #https://github.com/rnctechnology/cdhub/
-#author zilinchen@yahoo.com at 2015.12.12
+#author zilinchen@yahoo.com at 2015.12.11
 
 #install ambari-agent
 MASTERNAME=`hostname -f`
