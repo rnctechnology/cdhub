@@ -1,5 +1,9 @@
 #!/bin/bash
 
+#RNCTechnology is your best friend for cloud hadoop cluster deployment
+#https://github.com/rnctechnology/cdhub/
+#author zilinchen@yahoo.com at 2015.12.11
+
 if [ $# -eq 0 ]; then
     echo "Usage install_agent <Server_Host_Name>"
     exit 1
