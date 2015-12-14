@@ -1,0 +1,15 @@
+#!/bin/bash
+
+#Step 1, generate SSH key
+ssh-keygen -t rsa
+cd ~/.ssh
+cat id_rsa.pub >> authorized_keys
+
+#Step 2, Distribute SSH keys
+cd ~
+if [ -f ../hosts.txt ]; then
+  for host in `cut -d':' -f2 hosts.txt`; do
+    ssh-copy-id -i ~/.ssh/id_rsa.pub $host
+  done
+fi
+echo "SSH done!"
