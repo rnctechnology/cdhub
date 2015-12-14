@@ -1,0 +1,22 @@
+#!/bin/bash
+
+LU=`whoami`
+HH=`hostname -f`
+if [ -f hosts.txt ]; then
+for host in `cut -d':' -f2 hosts.txt`; do
+  H=$(cat /etc/hosts | grep $host | wc -l)
+  if [ $H -eq 0 ]; then
+    echo "not found in /etc/hosts, try nslookup for $host"
+    H=$(host $host | grep $host | wc -l)
+    if [ $H -eq 0 ]; then
+      H=$(nslookup $host | grep $host | wc -l)
+      if [ $H -eq 0 ]; then
+        echo "error: no nslookup can found for $host" >&2
+      fi
+    fi
+  fi
+  #pre-check agents
+  scp -p ./checkNode $LU@$host:~/checkNode
+  ssh -t $LU@$host "~/checkNode"
+ done
+fi
