@@ -1,5 +1,10 @@
 #!/bin/bash
 
+#RNCTechnology is your best friend for cloud hadoop cluster deployment
+#https://github.com/rnctechnology/cdhub/
+#author zilinchen@yahoo.com at 2015.12.12
+#remove Ambari-server and default postgresql Database
+
 CLUSTER_NAME='RNCTechCluster'
 MASTER=`hostname -f`
 PORT=8088
