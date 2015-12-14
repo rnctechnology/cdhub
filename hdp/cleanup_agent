@@ -1,0 +1,139 @@
+#!/bin/bash
+
+sudo ambari-agent stop
+sudo service postgresql stop
+
+if [ -f /usr/lib/python2.6/site-packages/ambari_agent/HostCleanup.py ]; then
+  sudo python /usr/lib/python2.6/site-packages/ambari_agent/HostCleanup.py -s -f /etc/ambari-agent/conf/ambari-agent.ini,/etc/ambari-agent/conf/HostCleanup_Custom_Actions.ini -o /tmp/cleanup.log
+  #sudo python /usr/lib/python2.6/site-packages/ambari_agent/HostCleanup.py --silent
+fi
+
+sudo yum remove -y ambari* 
+sudo yum remove -y hadoop* hdfs* bigtop* hbase* hive* hdp-select ranger* zookeeper* postgresql-libs postgresql postgresql-server
+sudo yum remove -y mysql mysql-server mysql-libs mysql-connector-java
+sudo yum remove -y knox* webhat* flume* spark* kafka* mahout* tez* phoenix*
+sudo yum remove -y accumulo* ams* sqoop* pig*
+sudo yum remove -y atlas* falcon* slider* storm*
+
+rm -rf /var/run/mysqld
+rm -rf /var/run/storm
+rm -rf /var/run/knox
+rm -rf /var/run/webhcat
+rm -rf /var/run/ambari-server
+rm -rf /var/run/flume
+rm -rf /var/run/accumulo
+rm -rf /var/run/zookeeper
+rm -rf /var/run/hadoop-mapreduce
+rm -rf /var/run/spark
+rm -rf /var/run/ambari-agent
+rm -rf /var/run/hbase
+rm -rf /var/run/ambari-metrics-monitor
+rm -rf /var/run/hadoop
+rm -rf /var/run/hadoop-yarn
+rm -rf /var/run/kafka
+rm -rf /var/run/atlas
+
+rm -rf /var/lib/ambari-server
+rm -rf /var/lib/oozie
+rm -rf /var/lib/pgsql
+rm -rf /var/lib/hive
+rm -rf /var/lib/mysql
+rm -rf /var/lib/flume
+rm -rf /var/lib/hadoop-hdfs
+rm -rf /var/lib/hadoop-mapreduce
+rm -rf /var/lib/ambari-agent
+rm -rf /var/lib/hadoop-yarn
+rm -rf /var/lib/atlas
+
+rm -rf /var/log/mysqld.log
+rm -rf /var/log/mysqld.log.rpmsave
+rm -rf /var/log/storm
+rm -rf /var/log/flume
+rm -rf /var/log/accumulo
+rm -rf /var/log/knox
+rm -rf /var/log/ambari-server
+rm -rf /var/log/zookeeper
+rm -rf /var/log/hadoop-mapreduce
+rm -rf /var/log/spark
+rm -rf /var/log/ambari-agent
+rm -rf /var/log/hbase
+rm -rf /var/log/ambari-metrics-monitor
+rm -rf /var/log/hadoop
+rm -rf /var/log/hadoop-yarn
+rm -rf /var/log/kafka
+rm -rf /var/log/atlas
+
+rm -rf /etc/mahout
+rm -rf /etc/storm
+rm -rf /etc/knox
+rm -rf /etc/ambari-server
+rm -rf /etc/sqoop
+rm -rf /etc/my.cnf
+rm -rf /etc/oozie
+rm -rf /etc/hive
+rm -rf /etc/slider
+rm -rf /etc/flume
+rm -rf /etc/accumulo
+rm -rf /etc/ams-hbase
+rm -rf /etc/hive-webhcat
+rm -rf /etc/zookeeper
+rm -rf /etc/tez
+rm -rf /etc/storm-slider-client
+rm -rf /etc/spark
+rm -rf /etc/phoenix
+rm -rf /etc/ambari-agent
+rm -rf /etc/hbase
+rm -rf /etc/ambari-metrics-monitor
+rm -rf /etc/hive-hcatalog
+rm -rf /etc/hadoop
+rm -rf /etc/kafka
+rm -rf /etc/atlas
+rm -rf /etc/pig
+rm -rf /etc/falcon
+
+rm -rf /usr/lib/storm
+rm -rf /usr/lib/ambari-server
+rm -rf /usr/lib/bigtop-tomcat
+rm -rf /usr/lib/flume
+rm -rf /usr/lib/ambari-metrics-hadoop-sink
+rm -rf /usr/lib/ambari-metrics-kafka-sink
+rm -rf /usr/lib/bigtop-utils
+rm -rf /usr/lib/ambari-agent
+rm -rf /opt/hadoop /opt/app/hadoop /opt/app/ambari-metrics-collector /opt/kafka-logs
+
+rm -rf /usr/hdp /usr/hadoop /usr/kafka-logs
+rm -rf /tmp/ambari-qa /tmp/hive /tmp/hadoop
+rm -rf /home/accumulo /home/ams /home/atlas /home/mahout /home/nagios /home/spark
+
+rm -rf /usr/lib/python2.6/site-packages/ambari_agent /usr/lib/python2.6/site-packages/resource_management
+rm -rf /usr/lib/python2.6/site-packages/ambari_simplejson /usr/lib/python2.6/site-packages/ambari_jinja2 /usr/lib/python2.6/site-packages/ambari_commons
+
+sudo rm -rf /usr/hdp/
+sudo rm -f /etc/yum.repos.d/ambari.repo
+sudo rm -f /etc/yum.repos.d/HDP*.repo
+
+killall httpd
+sudo yum clean all metadata
+yum clean all
+
+killall java
+killall /usr/jdk64/jdk1.8.0_40/bin/java
+ps -elf | grep java
+
+PID=`ps -ef | grep kafka | awk '{ print $2 }'`
+kill -9 $PID
+
+PID=`ps -ef | grep ams | awk '{ print $2 }'`
+kill -9 $PID
+
+PID=`ps -ef | grep hbase | awk '{ print $2 }'`
+kill -9 $PID
+
+PID=`ps -ef | grep hive | awk '{ print $2 }'`
+kill -9 $PID
+
+rm -f /var/lib/rpm/__db*
+rpm --rebuilddb
+
+HOSTN=`hostname -f`
+echo "$HOSTN is cleanup"
