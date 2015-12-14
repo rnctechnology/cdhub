@@ -1,0 +1,21 @@
+#!/bin/bash
+
+#install ambari-agent
+MASTERNAME=`hostname -f`
+LU=`whoami`
+
+BPSTACK=hdp
+if [ $# -gt 0 ]; then
+  var1=$1
+  if [ "X${var1,,}" != "X" ]; then
+   BPSTACK=${var1,,}"
+  fi
+fi
+
+for hh in `cut -d':' -f2 hosts.txt`; do
+  echo "insall agent from $BPSTACK on $hh ..."
+  scp -p ./install_agent $LU@$hh:~/
+  sleep 2
+  ssh -t $LU@$hh "./install_agent $MASTERNAME $BPSTACK"
+done
+echo "All agents Installed"
