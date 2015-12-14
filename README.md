@@ -15,10 +15,18 @@ based on Apache Ambari 2.1.x Open Source<br>
 passwordless SSH from Ambari-server node to all other nodes<br>
 
 ## Usage
-./hdp.sh   -- create new Hadoop Cluster (HDP 2.3)<br>
-./cleanup.sh  -- cleanup existing cluster and prepare hostsfor new installation<br>
-./preCkeckAll -- prepare hosts for new installation<br>
-./utils/setSSH -- setup passwordless SSH<br>
+1, edit hosts.txt file base on your layout <br>
+2, setup SSH passwordless <br>
+   ./utils/setSSH -- setup passwordless SSH<br>
+3, run preCheckAll <br>
+   ./preCkeckAll -- prepare hosts for new installation<br> 
+4, create brand new hadoop cluster<br>
+   ./hdp.sh   -- create new Hadoop Cluster (HDP 2.3)<br>
+
+for reinstall your cluster <br>
+1, ./cleanup.sh  -- cleanup existing cluster and prepare hostsfor new installation<br>
+2, ./hdp.sh <br>
+
 
 ## Configuration
  all default configuartion are in blueprint file.<br>
