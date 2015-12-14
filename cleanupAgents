@@ -1,0 +1,25 @@
+#!/bin/bash
+
+#cleanup ambari-agent
+LU=`whoami`
+
+BPSTACK=hdp
+if [ $# -gt 0 ]; then
+  var1=$1
+  if [ "X${var1,,}" != "X" ]; then
+   BPSTACK="${var1,,}"
+  fi
+fi
+
+for hh in `cut -d':' -f2 hosts.txt`; do
+  echo "cleanup agent from $BPSTACK on $hh ..."
+  if [ "$BPSTACK" = "hdp" ]; then
+    scp -p ./hdp/HostCleanup_Custom_Actions.ini $LU@$hh:/etc/ambari-agent/conf/HostCleanup_Custom_Actions.ini
+    scp -p ./hdp/cleanup_agent $LU@$hh:~/cleanup_agent
+  else
+    #do similar
+  fi
+  sleep 20
+  ssh -t $LU@$hh "~/cleanup_agent"
+done
+echo "All agents are cleanup"
