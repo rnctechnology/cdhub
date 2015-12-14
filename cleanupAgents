@@ -1,5 +1,8 @@
 #!/bin/bash
 
+#RNCTechnology is your best friend for cloud hadoop cluster deployment
+#https://github.com/rnctechnology/cdhub/
+#author zilinchen@yahoo.com at 2015.12.11
 #cleanup ambari-agent
 LU=`whoami`
 
