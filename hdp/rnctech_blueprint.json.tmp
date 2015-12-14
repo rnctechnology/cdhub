@@ -1,0 +1,139 @@
+{
+  "configurations" : [
+    {
+      "cluster-env" : {
+        "security_enabled" : "false",
+        "smokeuser" : "ambari-qa",
+        "user_group" : "hadoop"
+      }
+    },
+    {
+      "oozie-site" : {
+         "oozie.service.JPAService.jdbc.password": "Admin123"
+      }
+    },
+    {
+      "hive-site" : {
+         "javax.jdo.option.ConnectionPassword": "Admin123"
+      }
+    },
+    {
+       "hive-env": {
+          "hive_metastore_user_passwd": "Admin123"
+        }
+    }, 
+    {
+      "accumulo-env" : {
+	  "accumulo_root_password" : "Admin123",
+          "instance_secret" : "Admin123"
+        }
+    },
+    {
+      "knox-env" : {
+        "knox_master_secret" : "Admin123"
+      }
+    }
+  ],
+  "host_groups": [
+    {
+      "name": "rnctechmaster",
+      "configurations": [],
+      "components": [
+	{"name" : "ACCUMULO_MONITOR"},
+	{"name" : "YARN_CLIENT"},
+	{"name" : "HDFS_CLIENT"},
+	{"name" : "ACCUMULO_TRACER"},
+	{"name" : "METRICS_MONITOR"},
+	{"name" : "ACCUMULO_GC"},
+	{"name" : "TEZ_CLIENT"},
+	{"name" : "ATLAS_SERVER"},
+	{"name" : "KNOX_GATEWAY"},
+	{"name" : "ACCUMULO_MASTER"},
+	{"name" : "MAPREDUCE2_CLIENT"},
+	{"name" : "ZOOKEEPER_SERVER"},
+	{"name" : "SPARK_JOBHISTORYSERVER"}
+      ],
+      "cardinality": "1"
+    },
+    {
+      "name": "rnctechcompute",
+      "configurations": [],
+      "components": [
+      	{"name" : "NODEMANAGER"},
+	{"name" : "MAHOUT"},
+	{"name" : "SPARK_CLIENT"},
+	{"name" : "YARN_CLIENT"},
+	{"name" : "HDFS_CLIENT"},
+	{"name" : "FALCON_CLIENT"},
+	{"name" : "SQOOP"},
+	{"name" : "METRICS_MONITOR"},
+	{"name" : "SUPERVISOR"},
+	{"name" : "ACCUMULO_TSERVER"},
+	{"name" : "TEZ_CLIENT"},
+	{"name" : "ZOOKEEPER_CLIENT"},
+	{"name" : "HCAT"},
+	{"name" : "PIG"},
+	{"name" : "MAPREDUCE2_CLIENT"},
+	{"name" : "SLIDER"},
+	{"name" : "ACCUMULO_CLIENT"},
+	{"name" : "OOZIE_CLIENT"},
+	{"name" : "HBASE_REGIONSERVER"},
+	{"name" : "DATANODE"},
+	{"name" : "HBASE_CLIENT"},
+	{"name" : "FLUME_HANDLER"},
+	{"name" : "HIVE_CLIENT"},
+	{"name" : "PHOENIX_QUERY_SERVER"}
+      ],
+      "cardinality": "1+"
+    },
+    {
+      "name": "rnctechslavemaster1",
+      "configurations": [],
+      "components": [
+	{"name" : "YARN_CLIENT"},
+	{"name" : "HDFS_CLIENT"},
+	{"name" : "HIVE_SERVER"},
+	{"name" : "MYSQL_SERVER"},
+	{"name" : "METRICS_MONITOR"},
+	{"name" : "HBASE_MASTER"},
+	{"name" : "HIVE_METASTORE"},
+	{"name" : "NAMENODE"},
+	{"name" : "TEZ_CLIENT"},
+	{"name" : "ZOOKEEPER_CLIENT"},
+	{"name" : "PIG"},
+	{"name" : "WEBHCAT_SERVER"},
+	{"name" : "MAPREDUCE2_CLIENT"},
+	{"name" : "ZOOKEEPER_SERVER"},
+	{"name" : "OOZIE_SERVER"},
+	{"name" : "APP_TIMELINE_SERVER"},
+	{"name" : "METRICS_COLLECTOR"}
+      ],
+      "cardinality": "1"
+    },
+    {
+      "name": "rnctechslavemaster2",
+      "configurations": [],
+      "components": [
+	{"name" : "HDFS_CLIENT"},
+	{"name" : "STORM_UI_SERVER"},
+	{"name" : "HISTORYSERVER"},
+	{"name" : "METRICS_MONITOR"},
+	{"name" : "TEZ_CLIENT"},
+	{"name" : "NIMBUS"},
+	{"name" : "KAFKA_BROKER"},
+	{"name" : "SECONDARY_NAMENODE"},
+	{"name" : "ZOOKEEPER_SERVER"},
+	{"name" : "OOZIE_CLIENT"},
+	{"name" : "FALCON_SERVER"},
+	{"name" : "DRPC_SERVER"},
+	{"name" : "RESOURCEMANAGER"}
+      ],
+      "cardinality": "1"
+    }
+    ],
+  "Blueprints": {
+    "blueprint_name": "rnctechBP",
+    "stack_name": "HDP",
+    "stack_version": "2.3"
+  }
+}
