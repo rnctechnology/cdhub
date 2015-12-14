@@ -1,0 +1,4 @@
+nnode:namenode.master.rnctechnology.com
+rnode:resourcemanagernode.master.rnctechnology.com
+dnode:datanode.master.rnctechnology.com
+mnode:ambariservernode.master.rnctechnology.com
