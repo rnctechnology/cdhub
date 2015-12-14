@@ -5,7 +5,7 @@
 #author zilinchen@yahoo.com at 2015.09.12
 
 MASTER=`hostname -f`
-PORT=8081
+PORT=8088
 STACKNAME="HDP"
 STACKV="2.3"
 CLSRNAME="RNCTechCluster"
