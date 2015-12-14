@@ -1,0 +1,16 @@
+{ "blueprint":"rnctechBP",
+  "host_groups":[
+    { "name":"rnctechmaster1",
+      "hosts":[ { "fqdn":"MNODE" } ]
+    },
+    { "name":"rnctechcompute",
+      "hosts":[{ "fqdn":"DNODE" } ]
+    },
+    { "name":"rnctechmaster2",
+      "hosts":[ { "fqdn":"NNODE" } ]
+    },
+    { "name":"rnctechmaster3",
+      "hosts":[ { "fqdn":"RNODE" } ]
+    }
+  ]
+}
