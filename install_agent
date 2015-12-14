@@ -1,0 +1,31 @@
+#!/bin/bash
+
+if [ $# -eq 0 ]; then
+    echo "Usage install_agent <Server_Host_Name>"
+    exit 1
+fi
+HOSTN="hostname=$1"
+
+BPSTACK=hdp
+if [ $# -gt 1 ]; then
+   BPSTACK=$2
+fi
+
+cd /etc/yum.repos.d
+sudo rm -f ambari.repo
+if [ "$BPSTACK" = "hdp" ]; then
+  sudo wget -nv http://public-repo-1.hortonworks.com/ambari/centos6/2.x/updates/2.1.2/ambari.repo
+else
+  #generate ambari.repo base on $2  
+fi
+cd ~
+
+sudo yum clean all
+sudo yum install -y nc
+sudo yum install -y ambari-agent
+
+sudo sed -i "s/hostname=localhost/$HOSTN/g" /etc/ambari-agent/conf/ambari-agent.ini
+
+sudo ambari-agent start
+
+netstat -an | grep 8670
