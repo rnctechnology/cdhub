@@ -1,0 +1,59 @@
+#!/bin/bash
+
+#RNCTechnology is your best friend for cloud hadoop cluster deployment
+#https://github.com/rnctechnology/cdhub/
+#author zilinchen@yahoo.com at 2015.12.12
+
+#prepare node for ambari-server/agent installation
+#it will remove previous postgresql/nagios/ganglia
+#check agent host nslookup if hosts.txt file exists
+#enable dns and disable firewall etc.
+
+HOSTNAME=`hostname -f`
+echo "prepareing on host $HOSTNAME ....."
+
+yum-complete-transaction
+LU=`whoami`
+#remove db if exist
+if [ $(sudo yum list installed postgresql* | grep postgresql | wc -l) -gt 0 ]; then
+  PSVS=$(sudo yum list installed postgresql* | grep postgresql | cut -c 35-40) 
+  PSV=$(echo $PSVS | cut -d' ' -f1)
+  if [ $PSV != "8.4.20" ]; then
+    echo "postgresql version is $PSV, removing now ...."
+    sudo -u postgres dropdb ambari
+    sudo yum remove -y postgresql*
+    sudo rm -rf /var/lib/pgsql/ /var/lib/postgresql/
+  fi
+fi
+
+if [ $(sudo yum list installed mysql* | grep mysqsql | wc -l) -gt 0 ]; then
+  echo "remove previous mysql installation"
+  sudo yum remove -y mysql mysql-devl mysql-server
+  sudo rm -rf /var/lib/mysql/*
+fi
+
+sudo yum remove -y xfsprogs*
+
+#enable NTP
+if [ $(ps -ef | grep -v grep | grep ntpd | wc -l) -lt 1 ]; then
+  echo "enable ntp service now"
+  sudo yum install -y ntp
+  sudo chkconfig ntpd on
+  sudo service ntpd start
+fi
+
+#disable THP
+if [ "$LU" = "root" ]; then
+  echo never > /sys/kernel/mm/transparent_hugepage/enabled
+else
+  echo never | sudo tee /sys/kernel/mm/transparent_hugepage/enabled
+fi
+
+#disable firewall
+if [ $(ps -ef | grep -v grep | grep iptables | wc -l) -gt 0 ]; then
+  echo "disable firewall now"
+  sudo setenforce 0
+  sudo sed -i s/SELINUX=enforcing/SELINUX=disabled/g /etc/selinux/config
+  sudo chkconfig iptables off
+  sudo service iptables stop
+fi
