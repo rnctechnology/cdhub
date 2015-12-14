@@ -1,5 +1,7 @@
 # cdhub
-cloud data hub
+Cloud Deployment HUB<br>
+RNCTechnology is your best friend for cloud hadoop cluster deployment<br>
+#https://github.com/rnctechnology/cdhub/<br>
 
 ## Features
 1, deploy Hadoop Cluster on 3-master nodes and x-data nodes<br>
