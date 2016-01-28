@@ -37,6 +37,10 @@ if [ "$BPSTACK" = "hdp" ]; then
       cp -p ./hdp/HostCleanup_Custom_Actions.ini /etc/ambari-agent/conf/HostCleanup_Custom_Actions.ini
       sudo python /usr/lib/python2.6/site-packages/ambari_agent/HostCleanup.py  --silent -f /etc/ambari-agent/conf/ambari-agent.ini,/etc/ambari-agent/conf/HostCleanup_Custom_Actions.ini -o /tmp/cleanup.log
    fi
+elif [ "$BPSTACK" = "iop" ]; then
+   if [ -f /etc/ambari-agent/conf/HostCleanup.ini ]; then
+    sudo python /usr/lib/python2.6/site-packages/ambari_agent/HostCleanup.py --silent --skip=users -f /etc/ambari-agent/conf/HostCleanup.ini,/etc/ambari-agent/conf/HostCleanup_Custom_Actions.ini -o /tmp/cleanup.log
+   fi
 else
  #call HostCleanup.py
 fi
