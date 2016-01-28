@@ -19,6 +19,8 @@ cd /etc/yum.repos.d
 sudo rm -f ambari.repo
 if [ "$BPSTACK" = "hdp" ]; then
   sudo wget -nv http://public-repo-1.hortonworks.com/ambari/centos6/2.x/updates/2.1.2/ambari.repo
+elif [ "$BPSTACK" = "iop" ]; then
+  sudo wget -nv https://ibm-open-platform.ibm.com/cloud/Ambari/2.1.0.0-1/ambari.repo  
 else
   #generate ambari.repo base on $2  
 fi
