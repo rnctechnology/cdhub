@@ -1,5 +1,8 @@
 #!/bin/bash
 
+#RNCTechnology
+#author Zilin Chen @ zilinchen@yahoo.com
+
 mysql_host=`hostname -f`
 root_user="root"
 root_pwd=$1
