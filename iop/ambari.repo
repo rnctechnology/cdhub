@@ -1,0 +1,6 @@
+[BI_AMBARI-2.1.0-Spark-1.5.1-20151214_1321]
+name=ambari-2.1.0-Spark-1.5.1-20151214_1321
+baseurl=http://ibm-open-platform.ibm.com/cloud/Ambari/2.1.0.0-1
+enabled=1
+gpgcheck=1
+gpgkey=http://ibm-open-platform.ibm.com/cloud/Ambari/2.1.0.0-1/BI-GPG-KEY.public
