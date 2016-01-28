@@ -17,7 +17,11 @@ HSF="./hdp/rnctech_hosts.json"
 BPF="./hdp/rnctech_blueprint.json"
 if [ "$BPSTACK" = "hdp" ]; then
   cp ./hdp/rnctech_blueprint.json.tmp $BPF
-else  
+elif [ "" = "iop" ]; then
+  HSF="./iop/rnctech_hosts.json"
+  BPF="./iop/rnctech_blueprint.json"
+  cp ./iop/rnctech_blueprint.json.tmp $BPF
+else
   #cp BPF and HSF file and blueprint tempalate file
 fi
 cp rnctech_hosts.json.tmp $HSF
@@ -50,9 +54,11 @@ STACKNAME="HDP"
 STACKV="2.3"
 
 if [ "$BPSTACK" = "hdp" ]; then
-  STACKNAME="HDP"
-  STACKV="2.3"
   cd hdp
+elif [ "$BPSTACK" = "iop" ]; then  
+  STACKNAME="BigInsights"
+  STACKV="4.1"
+  cd iop
 else
   #other stack
 fi
