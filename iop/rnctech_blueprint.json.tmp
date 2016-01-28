@@ -1,0 +1,244 @@
+{
+  "configurations" : [
+    {
+      "cluster-env" : {
+        "security_enabled" : "false",
+        "smokeuser" : "ambari-qa",
+        "user_group" : "hadoop"
+      }
+    },
+    {
+      "core-site" : {
+        "fs.defaultFS" : "hdfs://rnctechcluster",
+        "ha.zookeeper.quorum" : "NNODE:2181,MNODE:2181,RNODE:2181"
+      }
+    },
+    {
+      "hadoop-env" : {
+          "hadoop_heapsize" : "1024",
+          "dtnode_heapsize" : "1024m",
+          "namenode_opt_newsize" : "200m",
+          "namenode_heapsize" : "1024m",
+          "namenode_opt_maxpermsize" : "256m",
+          "nfsgateway_heapsize" : "1024",
+          "namenode_opt_maxnewsize" : "200m",
+          "namenode_opt_permsize" : "128m"
+        }
+    },
+    {
+      "hdfs-site" : {
+        "dfs.client.failover.proxy.provider.rnctechcluster" : "org.apache.hadoop.hdfs.server.namenode.ha.ConfiguredFailoverProxyProvider",
+        "dfs.ha.automatic-failover.enabled" : "true",
+        "dfs.ha.fencing.methods" : "shell(/bin/true)",
+        "dfs.ha.namenodes.rnctechcluster" : "nn1,nn2",
+        "dfs.namenode.http-address" : "NNODE:50070",
+        "dfs.namenode.http-address.rnctechcluster.nn1" : "NNODE:50070",
+        "dfs.namenode.http-address.rnctechcluster.nn2" : "RNODE:50070",
+        "dfs.namenode.https-address" : "NNODE:50470",
+        "dfs.namenode.https-address.rnctechcluster.nn1" : "NNODE:50470",
+        "dfs.namenode.https-address.rnctechcluster.nn2" : "RNODE:50470",
+        "dfs.namenode.rpc-address.rnctechcluster.nn1" : "NNODE:8020",
+        "dfs.namenode.rpc-address.rnctechcluster.nn2" : "RNODE:8020",
+        "dfs.namenode.shared.edits.dir" : "qjournal://RNODE:8485;NNODE:8485;MNODE:8485/rnctechcluster",
+        "dfs.client.failover.proxy.provider.rnctechcluster" : "org.apache.hadoop.hdfs.server.namenode.ha.ConfiguredFailoverProxyProvider",
+        "dfs.journalnode.edits.dir" : "/hadoop/hdfs/journal",
+        "dfs.nameservices" : "rnctechcluster"  
+      }
+    },
+    {
+      "yarn-site" : {
+        "hadoop.registry.rm.enabled" : "false",
+        "hadoop.registry.zk.quorum" : "NNODE:2181,MNODE:2181,RNODE:2181",
+        "yarn.resourcemanager.ha.enabled" : "true",
+        "yarn.resourcemanager.cluster-id" : "RNCTechCluster",
+        "yarn.resourcemanager.ha.rm-ids" : "rm1,rm2",
+        "yarn.resourcemanager.hostname.rm1" : "RNODE",
+        "yarn.resourcemanager.webapp.address.rm1" : "RNODE:8088",
+        "yarn.resourcemanager.hostname.rm2" : "NNODE",
+        "yarn.resourcemanager.webapp.address.rm2" : "NNODE:8088",
+        "yarn.resourcemanager.zk-address" : "NNODE:2181,MNODE:2181,RNODE:2181",
+        "yarn.resourcemanager.recovery.enabled" : "true",
+        "yarn.resourcemanager.store.class" : "org.apache.hadoop.yarn.server.resourcemanager.recovery.ZKRMStateStore",
+        "yarn.log.server.url" : "http://RNODE:19888/jobhistory/logs",          
+        "yarn.resourcemanager.address" : "RNODE:8050",
+        "yarn.resourcemanager.ha.automatic-failover.zk-base-path" : "/yarn-leader-election",
+        "yarn.resourcemanager.webapp.address" : "RNODE:8088",
+        "yarn.timeline-service.address" : "RNODE:10200",              
+        "yarn.resourcemanager.admin.address" : "RNODE:8141", 
+        "yarn.resourcemanager.hostname" : "RNODE",
+        "yarn.resourcemanager.resource-tracker.address" : "RNODE:8025",        
+        "yarn.resourcemanager.scheduler.address" : "RNODE:8030",  
+        "yarn.timeline-service.webapp.address" : "RNODE:8188",
+        "yarn.timeline-service.webapp.https.address" : "RNODE:8190"
+      }
+    },
+    {
+      "hbase-env" : {
+        "hbase_regionserver_heapsize" : "1024m",
+        "hbase_master_heapsize" : "1024m"
+      }
+    },
+    {
+      "hbase-site" : {
+        "hbase.zookeeper.quorum" : "NNODE,MNODE,RNODE",
+        "hbase.rootdir" : "hdfs://rnctechcluster/apps/hbase/data"
+      }
+    }, 
+    {
+      "oozie-site" : {
+         "oozie.service.JPAService.jdbc.password": "Admin123"
+      }
+    },
+    {
+      "oozie-env" : {
+         "oozie_heapsize" : "2048m",
+         "oozie_permsize" : "256m"
+      }
+    },
+    {
+      "hive-site" : {
+         "hive.zookeeper.quorum" :  "NNODE:2181,MNODE:2181,RNODE:2181",
+         "hive.heapsize" : "1024",
+         "hive.cluster.delegation.token.store.zookeeper.connectString" : "NNODE,MNODE,RNODE",
+         "javax.jdo.option.ConnectionPassword": "Admin123"
+      }
+    },
+    {
+       "hive-env": {
+          "hive_metastore_user_passwd": "Admin123"
+        }
+    }, 
+    {
+      "webhcat-site" : {
+        "templeton.zookeeper.hosts" :  "NNODE:2181,MNODE:2181,RNODE:2181"
+      }
+    },
+    {
+      "kafka-broker" : {
+        "zookeeper.connect" : "NNODE:2181,MNODE:2181,RNODE:2181"
+      }
+    },
+    {
+      "knox-env" : {
+        "knox_master_secret" : "Admin123"
+      }
+    }
+  ],
+  "host_groups": [
+    {
+      "name": "rnctechmaster",
+      "configurations": [],
+      "components": [
+        {"name": "KNOX_GATEWAY"},
+        {"name": "ZOOKEEPER_SERVER"},    
+        {"name": "SPARK_JOBHISTORYSERVER"},
+        {"name": "SPARK_THRIFTSERVER"}, 
+        {"name": "JOURNALNODE"},     
+        {"name": "PIG"},
+        {"name": "HCAT"},
+        {"name": "SQOOP"},      
+        {"name": "SLIDER"},
+        {"name": "HDFS_CLIENT"},
+        {"name": "YARN_CLIENT"},
+        {"name": "HIVE_CLIENT"},
+        {"name": "HBASE_CLIENT"},
+        {"name": "SPARK_CLIENT"},
+        {"name": "OOZIE_CLIENT"},
+        {"name": "MAPREDUCE2_CLIENT"},
+        {"name": "ZOOKEEPER_CLIENT"},        
+        {"name": "METRICS_MONITOR"}
+      ],
+      "cardinality": "1"
+    },
+    {
+      "name": "rnctechcompute",
+      "configurations": [],
+      "components": [
+        {"name": "DATANODE"},
+        {"name": "NODEMANAGER"},
+        {"name": "HBASE_REGIONSERVER"},
+        {"name": "FLUME_HANDLER"},        
+        {"name": "PIG"},
+        {"name": "HCAT"},
+        {"name": "SQOOP"},      
+        {"name": "SLIDER"},        
+        {"name": "HDFS_CLIENT"},
+        {"name": "YARN_CLIENT"},
+        {"name": "HIVE_CLIENT"},
+        {"name": "HBASE_CLIENT"},
+        {"name": "SPARK_CLIENT"},
+        {"name": "OOZIE_CLIENT"},
+        {"name": "MAPREDUCE2_CLIENT"},
+        {"name": "ZOOKEEPER_CLIENT"},        
+        {"name": "METRICS_MONITOR"}
+      ],
+      "cardinality": "1+"
+    },
+    {
+      "name": "rnctechslavemaster1",
+      "configurations": [],
+      "components": [
+        {"name": "RESOURCEMANAGER"},
+        {"name": "APP_TIMELINE_SERVER"},
+        {"name": "JOURNALNODE"},
+        {"name": "NAMENODE"},
+        {"name": "ZKFC"},             
+        {"name": "HBASE_MASTER"},
+        {"name": "ZOOKEEPER_SERVER"},
+        {"name": "OOZIE_SERVER"},
+        {"name": "MYSQL_SERVER"},
+        {"name": "HIVE_SERVER"},        
+        {"name": "HIVE_METASTORE"},
+        {"name": "WEBHCAT_SERVER"}, 
+        {"name": "METRICS_COLLECTOR"},
+        {"name": "SOLR"},
+        {"name": "PIG"},
+        {"name": "HCAT"},
+        {"name": "SQOOP"},      
+        {"name": "SLIDER"},        
+        {"name": "HDFS_CLIENT"},
+        {"name": "YARN_CLIENT"},
+        {"name": "HIVE_CLIENT"},
+        {"name": "HBASE_CLIENT"},
+        {"name": "SPARK_CLIENT"},
+        {"name": "OOZIE_CLIENT"},
+        {"name": "MAPREDUCE2_CLIENT"},
+        {"name": "ZOOKEEPER_CLIENT"},        
+        {"name": "METRICS_MONITOR"}
+      ],
+      "cardinality": "1"
+    },
+    {
+      "name": "rnctechslavemaster2",
+      "configurations": [],
+      "components": [
+        {"name": "NAMENODE"},
+        {"name": "RESOURCEMANAGER"},  
+        {"name": "JOURNALNODE"},
+        {"name": "ZKFC"},
+        {"name": "HISTORYSERVER"},
+        {"name": "ZOOKEEPER_SERVER"},  
+        {"name": "KAFKA_BROKER"},        
+        {"name": "PIG"},
+        {"name": "HCAT"},
+        {"name": "SQOOP"},      
+        {"name": "SLIDER"},        
+        {"name": "HDFS_CLIENT"},
+        {"name": "YARN_CLIENT"},
+        {"name": "HIVE_CLIENT"},
+        {"name": "HBASE_CLIENT"},
+        {"name": "SPARK_CLIENT"},
+        {"name": "OOZIE_CLIENT"},
+        {"name": "MAPREDUCE2_CLIENT"},
+        {"name": "ZOOKEEPER_CLIENT"},        
+        {"name": "METRICS_MONITOR"} 
+      ],
+      "cardinality": "1"
+    }
+    ],
+  "Blueprints": {
+    "blueprint_name": "rnctechBP",
+    "stack_name": "BigInsights",
+    "stack_version": "4.1"
+  }
+}
