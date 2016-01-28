@@ -19,6 +19,8 @@ for hh in `cut -d':' -f2 hosts.txt`; do
   if [ "$BPSTACK" = "hdp" ]; then
     scp -p ./hdp/HostCleanup_Custom_Actions.ini $LU@$hh:/etc/ambari-agent/conf/HostCleanup_Custom_Actions.ini
     scp -p ./hdp/cleanup_agent $LU@$hh:~/cleanup_agent
+  elif [ "$BPSTACK" = "iop" ]; then
+     scp -p ./iop/cleanup_agent $LU@$hh:~/cleanup_agent
   else
     #do similar
   fi
