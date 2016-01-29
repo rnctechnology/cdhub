@@ -5,7 +5,7 @@ MAINTAINER RNCTech <zilinchen@yahoo.com>
 ADD mariadb.repo /etc/yum.repos.d/mariadb.repo
 
 RUN yum -y update && yum clean all
-RUN yum -y install --setopt=tsflags=nodocs epel-release && yum -y install --setopt=tsflags=nodocs mariadb-server mariadb-client bind-utils pwgen psmisc hostname
+RUN yum -y install --setopt=tsflags=nodocs epel-release && yum -y install --setopt=tsflags=nodocs mariadb-server mariadb-client bind-utils pwgen psmisc hostname net-tools
 
 ADD configMariaDB.sh /root/configMariaDB.sh
 ADD configComponents.sh /root/configComponents.sh
