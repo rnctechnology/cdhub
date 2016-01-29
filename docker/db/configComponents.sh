@@ -34,7 +34,7 @@ fi
     mysql -u $root_user -p$root_pwd -e "FLUSH PRIVILEGES";
     set +f
     mysql -u $ambari_user -p$ambari_pwd -e "CREATE DATABASE $ambari_db";
-    mysql -u $ambari_user -p$ambari_pwd -e "USE $ambari_db; SOURCE Ambari-DDL-MySQL-CREATE.sql;";
+    mysql -u $ambari_user -p$ambari_pwd -e "USE $ambari_db; SOURCE /root/Ambari-DDL-MySQL-CREATE.sql;";
 #configOozie
     set -f
     mysql -u $root_user -p$root_pwd -e "CREATE USER '$oozie_user'@'%' IDENTIFIED BY '$oozie_pwd'";
@@ -57,4 +57,4 @@ fi
     mysql -u $root_user -p$root_pwd -e "FLUSH PRIVILEGES";
     set +f
     mysql -u $hive_user -p$hive_pwd -e "CREATE DATABASE $hive_db";
-    mysql -u $hive_user -p$hive_pwd -e "USE $hive_db; SOURCE hive-schema-0.14.0.mysql.sql;";
+    mysql -u $hive_user -p$hive_pwd -e "USE $hive_db; SOURCE /root/hive-schema-0.14.0.mysql.sql;";
