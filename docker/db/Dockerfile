@@ -15,16 +15,21 @@ ADD testMariaDB.sh /root/testMariaDB.sh
 ADD Ambari-DDL-MySQL-CREATE.sql /root/Ambari-DDL-MySQL-CREATE.sql
 ADD hive-schema-0.14.0.mysql.sql /root/hive-schema-0.14.0.mysql.sql
 COPY my.cnf /etc/my.cnf
+COPY server.cnf /etc/my.cnf.d/server.cnf
 COPY addGroup.sh /root/addGroup.sh
 COPY mariadb-entrypoint.sh /root/mariadb-entrypoint.sh
 
-ADD initdb.sql /root/initdb.sql
-ADD startdb.sh /root/startdb.sh
-
 RUN chmod +x /root/*.sh
+RUN mkdir -p /var/run/mariadb/
+RUN mkdir -p /var/log/mariadb/
+RUN /root/addGroup.sh /var/lib/mysql/
+RUN /root/addGroup.sh /var/log/mariadb/
+RUN /root/addGroup.sh /var/run/mariadb/
 
 VOLUME /var/lib/mysql
 VOLUME /var/log/mariadb
 
+ENTRYPOINT ["/root/mariadb-entrypoint.sh"]
+
 EXPOSE 3306
-CMD ["/root/startdb.sh"]
+CMD ["bash"]
