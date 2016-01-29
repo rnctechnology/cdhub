@@ -32,4 +32,3 @@ VOLUME /var/log/mariadb
 ENTRYPOINT ["/root/mariadb-entrypoint.sh"]
 
 EXPOSE 3306
-CMD ["bash"]
