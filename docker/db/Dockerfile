@@ -14,7 +14,7 @@ ADD testMariaDB.sh /root/testMariaDB.sh
 
 ADD Ambari-DDL-MySQL-CREATE.sql /root/Ambari-DDL-MySQL-CREATE.sql
 ADD hive-schema-0.14.0.mysql.sql /root/hive-schema-0.14.0.mysql.sql
-COPY my.cnf /etc/my.cnf
+
 COPY server.cnf /etc/my.cnf.d/server.cnf
 COPY addGroup.sh /root/addGroup.sh
 COPY mariadb-entrypoint.sh /root/mariadb-entrypoint.sh
