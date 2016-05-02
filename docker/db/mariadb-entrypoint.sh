@@ -15,11 +15,7 @@ if [ ! -f $configDone ]; then
 
   echo 'Finished configure MariaDB!' >> $configDone
 
-  if [ -z $TA_PWD ]; then
-    /root/configComponents.sh $ROOT_PWD $AMBARI_PWD $HIVE_PWD $OOZIE_PWD
-  else
-    /root/configComponents.sh $ROOT_PWD $AMBARI_PWD $HIVE_PWD $OOZIE_PWD $TA_PWD
-  fi
+  /root/configComponents.sh $ROOT_PWD $AMBARI_PWD $HIVE_PWD $OOZIE_PWD
 
   echo $msg >> $configDone
 fi

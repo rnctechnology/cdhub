@@ -1,0 +1,10 @@
+#!/bin/bash
+
+#RNCTechnology
+#author Zilin Chen @ zilinchen@yahoo.com
+
+docker ps
+
+docker exec rnctechdb /bin/bash -c "/root/testMariaDB.sh Admin123"
+
+#docker exec rnctechhadoop ambari-server setup -s --database=mysql --databasehost=localhost --databaseport=3306 --databasename=ambaridb --databaseusername=ambari --databasepassword=Admin123 

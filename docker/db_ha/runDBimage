@@ -1,0 +1,16 @@
+#!/bin/bash
+
+#RNCTechnology
+#author Zilin Chen @ zilinchen@yahoo.com
+
+docker ps
+#rnctech_db_centos7.tar rnctech/mariadb_ha:latest
+#docker load -i /tmp/rnctech_db_centos7.tar
+
+echo "run MariaDB image"
+docker run --name=rnctechdb -itdP -p 3306:3306 -p 4567:4567 -p 4444:4444 -p 4568:4568 -e CLST_IP=192.168.198.128 -e DB_1ST=true -e ROOT_PWD=Admin123 -e AMBARI_PWD=Admin123 -e HIVE_PWD=Admin123 -e OOZIE_PWD=Admin123 -e RANGER_PWD=Admin123 --net=host rnctech/mariadb_ha
+
+echo "waiting 20 second...."
+sleep 20
+docker ps
+

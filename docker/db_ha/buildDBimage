@@ -1,0 +1,10 @@
+#!/bin/bash
+
+#RNCTechnology
+#author Zilin Chen @ zilinchen@yahoo.com
+
+docker version
+docker build --rm=true --no-cache=true -t rnctech/mariadb_ha .
+
+#docker save -o rnctech_db_centos7.tar rnctech/mariadb_ha:latest
+

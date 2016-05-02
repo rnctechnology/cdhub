@@ -58,3 +58,14 @@ fi
     set +f
     mysql -u $hive_user -p$hive_pwd -e "CREATE DATABASE $hive_db";
     mysql -u $hive_user -p$hive_pwd -e "USE $hive_db; SOURCE /root/hive-schema-0.14.0.mysql.sql;";
+    
+    #configure ranger user
+    set -f
+    mysql -u $root_user -p$root_pwd -e "CREATE USER '$ranger_user'@'localhost' IDENTIFIED BY '$ranger_pwd'";
+    mysql -u $root_user -p$root_pwd -e "GRANT ALL PRIVILEGES ON *.* TO '$ranger_user'@'localhost'";
+    mysql -u $root_user -p$root_pwd -e "CREATE USER '$ranger_user'@'%' IDENTIFIED BY '$ranger_pwd'";
+    mysql -u $root_user -p$root_pwd -e "GRANT ALL PRIVILEGES ON *.* TO '$ranger_user'@'%'";
+    mysql -u $root_user -p$root_pwd -e "GRANT ALL PRIVILEGES ON *.* TO '$ranger_user'@'localhost' WITH GRANT OPTION";
+    mysql -u $root_user -p$root_pwd -e "GRANT ALL PRIVILEGES ON *.* TO '$ranger_user'@'%' WITH GRANT OPTION";
+    mysql -u $root_user -p$root_pwd -e "FLUSH PRIVILEGES";
+    set +f
